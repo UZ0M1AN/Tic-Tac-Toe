@@ -10,28 +10,34 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Tic Tac Toe</h1>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
 
     <div class="form">
         <p>Enter your name:</p>
-        <div>
-            <label for="p1">Player 1:</label>
-            <input type="text" id="p1">
-        </div>
-        <div>
-            <label for="p2">Player 2:</label>
-            <input type="text" id="p2">
-        </div>
+
+        <div class="player-names">
+            <div class="player-1">
+                <label for="p1">Player 1</label>
+                <input type="text" id="p1">
+            </div>
+            <div class="player-2">
+                <label for="p2">Player 2</label>
+                <input type="text" id="p2">
+            </div>
+        </div>   
+        <span class="ai">Play with AI</span>
+        <button class="btn btn--start">Start Game</button>
     </div>
 
     <div class="gameboard">
-        <p class="p1-name">Uzoma</p>
+        <p class="p1-name">Uzoma</p> <!-- Remember to use JS to handle differences in name lengths -->
 
         <table>
             <tr>
+                <td></td>
                 <td>x</td>
-                <td>x</td>
-                <td>x</td>
+                <td></td>
             </tr>
             <tr>
                 <td>o</td>
@@ -49,7 +55,8 @@
     </div>
 
     <div class="new-game">
-        <button class="btn">New Game</button>
+        <button class="btn btn--new">New Game</button>
+    </div>
     </div>
 </body>
 </html>

@@ -1,9 +1,188 @@
+/* GENERAL */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+html {
+    font-size: 62.5%;
+}
+
+::selection {
+    background-color: #eee;
+    color: hsl(228, 7%, 20%);
+}
+
 body {
-    /* background-color: red; */
+    background-color: #16171B;
+    color: #eee;
+    font-family: cursive;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 4rem 0;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+.form,
+.gameboard {
+    border-radius: 10px;
+}
+
+.ai,
+.btn {
+    cursor: pointer;
+    transition: all .15s;
+}
+
+.btn {
+    background-color: #222327;
+    color: #eee;
+    border: transparent;
+    border-radius: 5px;
+    padding: 1rem 1.5rem;
+    font-family: inherit;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1.2px;
+}
+/* /////////////////////////////////////////////////////////// */
+
+/* PLAYER DETAILS */
+.form {
+    font-size: 1.8rem;
+    background-image: linear-gradient(to right, hsl(225, 5%, 16%), hsl(228, 10%, 16%));
+    padding: 2rem 3rem;
+    margin-top: 3rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.player-names {
+    display: flex;
+    gap: 2rem;
+}
+
+.player-names div {
+    display: flex;
+    gap: 1rem;
+}
+
+.player-names div input {
+    padding: .5rem 1.5rem;
+    font-size: inherit;
+    font-family: inherit;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+}
+
+.player-names div input::selection {
+    background-color: hsl(228, 7%, 20%);
+    color: #eee;
+}
+
+.player-2 label{
+    order: 1;
+}
+
+.ai {
+    align-self: flex-end;
+
+    font-size: 1.5rem;
+}
+
+.ai:hover {
+    text-decoration: underline;
+}
+
+.btn--start {
+    margin-top: 2rem;
+}
+/* /////////////////////////////////////////////////////////// */
+
+/* GAMEBOARD */
+.gameboard {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    margin-top: 3rem;
+    background-color: #222327;
+    padding: 2rem 0;
+}
+
+.p1-name,
+.p2-name {
+    font-size: 1.5rem;
+    background-color: #16171B; 
+    padding: .5rem 1.5rem;   
+
+    justify-self: start;
+}
+
+.p1-name {
+    border-radius: 0 15px 15px 0;
+}
+
+.p2-name {
+    border-radius: 15px 0 0 15px;
+}
+
+table {
+    font-size: 5rem;
+    border-collapse: collapse;
+}
+
+tr:nth-child(1) td {
+    border-top: none;
+}
+
+tr:nth-child(3) td {
+    border-bottom: none;
+}
+
+td:nth-child(1) {
+    border-left: none;
+}
+
+td:nth-child(3) {
+    border-right: none;
+}
+
+td {
+    border: 3px solid #eee;
+    padding: 2rem;
+    width: 15rem;
+    height: 15rem;
+    text-align: center;
+
+    text-transform: uppercase;
+}
+/* /////////////////////////////////////////////////////////// */
+
+/* BUTTON */
+.new-game {
+    margin-top: 3rem;
+}
+
+.btn:hover {
+    background-color: #eee;
+    color: #222327;
+}
+/* /////////////////////////////////////////////////////////// */
+
+/* HELPERS */
+.no-display {
+    display: none;
 }
