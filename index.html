@@ -30,31 +30,31 @@
         <button class="btn btn--start">Start Game</button>
     </div>
 
-    <div class="gameboard">
-        <p class="p1-name">Uzoma</p> <!-- Remember to use JS to handle differences in name lengths -->
+    <div class="gameboard no-display">
+        <p class="p1-name active">Uzoma</p> <!-- Remember to use JS to handle differences in name lengths -->
 
         <table>
             <tr>
-                <td></td>
-                <td>x</td>
-                <td></td>
+                <td data-cell="0-0"></td>
+                <td data-cell="0-1"></td>
+                <td data-cell="0-2"></td>
             </tr>
             <tr>
-                <td>o</td>
-                <td>x</td>
-                <td>o</td>
+                <td data-cell="1-0"></td>
+                <td data-cell="1-1"></td>
+                <td data-cell="1-2"></td>
             </tr>
             <tr>
-                <td>o</td>
-                <td>x</td>
-                <td>o</td>
+                <td data-cell="2-0"></td>
+                <td data-cell="2-1"></td>
+                <td data-cell="2-2"></td>
             </tr>
         </table>
 
         <p class="p2-name">Mary</p>
     </div>
 
-    <div class="new-game">
+    <div class="new-game no-display">
         <button class="btn btn--new">New Game</button>
     </div>
     </div>
