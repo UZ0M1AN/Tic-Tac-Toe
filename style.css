@@ -33,16 +33,17 @@ h1 {
 }
 
 .form,
-.gameboard {
+.gameboard,
+.winner-display {
     border-radius: 10px;
 }
 
-.ai,
+.gamemode,
 .btn {
     cursor: pointer;
 }
 
-.ai,
+.gamemode,
 .btn,
 td {
     transition: all .15s;
@@ -107,13 +108,13 @@ td {
     order: 1;
 }
 
-.ai {
+.gamemode {
     align-self: flex-end;
 
     font-size: 1.5rem;
 }
 
-.ai:hover {
+.gamemode:hover {
     text-decoration: underline;
 }
 
@@ -139,6 +140,8 @@ td {
     letter-spacing: 1.2px;
     background-color: #16171B; 
     padding: .5rem 1.5rem; 
+    width: 15%;
+    word-wrap: break-word;
 
     justify-self: start;
 }
@@ -208,4 +211,59 @@ td:hover {
     text-shadow: 0 0 3px #eee;
     transform: scale(1.1);
     border-top: 1px solid #eee;
+}
+
+.win {
+    color: hsl(228, 10%, 9%);
+    background-color: #eee;
+    border-color: #16171B;
+}
+
+.win:hover {
+    transform: none;
+    background-color: #eee;
+}
+/* /////////////////////////////////////////////////////////// */
+
+/* OVERLAY AND WINNER-DISPLAY */
+.overlay {
+    height: 100vh;
+    min-width: 100vw;
+    background-color: rgba(0, 0, 0, .9);
+
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+
+.winner-display {
+    width: 50%;
+    padding: 4rem 2rem;
+    background-color: #222327;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.trophy {
+    font-size: 7rem;
+}
+
+.winner {
+    font-size: 5rem;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    width: 100%;
 }

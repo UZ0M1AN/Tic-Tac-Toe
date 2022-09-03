@@ -6,10 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
 
+    <script src="https://kit.fontawesome.com/3ab83d0a34.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
+    <div class="overlay no-display">
+        <div class="winner-display">
+            <p class="trophy"></p>
+            <p class="winner"></p>
+            <div class="btns">
+                <button class="btn btn--ok">OK</button>
+                <button class="btn btn--new">New Game</button>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <h1>Tic Tac Toe</h1>
 
@@ -26,7 +39,7 @@
                 <input type="text" id="p2">
             </div>
         </div>   
-        <span class="ai">Play with AI</span>
+        <span class="gamemode">Play with AI</span>
         <button class="btn btn--start">Start Game</button>
     </div>
 
