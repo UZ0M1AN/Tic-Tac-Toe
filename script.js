@@ -67,7 +67,7 @@ const eventsModule = (function() {
     }
     
     function _equal(a, b, c) {
-        return (a == 'x' && b == 'x' && c == 'x') || (a == 'o' && b == 'o' && c == 'o') ? [a,b,c].map(String) : false;
+        return (a == 'x' && b == 'x' && c == 'x') || (a == 'o' && b == 'o' && c == 'o');
     }
 
     function _winGame(datacells = _threeInARow()) {
