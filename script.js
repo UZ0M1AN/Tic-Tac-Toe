@@ -17,6 +17,7 @@ const elemModule = (function () {
         p1Label: document.querySelector('.player-1 > label'),
         p2Label: document.querySelector('.player-2 > label'),
         gameMode: document.querySelector('.gamemode'),
+        starter: document.querySelector('.starter'),
         gameboard: document.querySelector('.gameboard'),
         gameCells: document.querySelectorAll('td'),
         p1Name: document.querySelector('.p1-name'),
@@ -33,51 +34,49 @@ const elemModule = (function () {
 const varModule = (function() {
     return {
         counter: 0,
-        gameboardArr: [
-            ['', '', ''],
-            ['', '', ''],
-            ['', '', ''],
-        ],
+        gameboardArr: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        PLAY_AI: 'Play with AI',
+        PLAY_HUMAN: 'Play with Human',
+        START_HUMAN: 'You start',
+        START_AI: 'Robot starts',
+        robotStarts: false,
     }
 })();
 
 const eventsModule = (function() {
     // Private Methods
+
     function _changeClass(elem, func, cssClass) {
         elem.classList[func](cssClass);
     }
 
     function _threeInARow() {
-        const arr = varModule.gameboardArr;
-        const [c1, c2, c3] = [arr[0][0], arr[0][1], arr[0][2]];
-        const [c4, c5, c6] = [arr[1][0], arr[1][1], arr[1][2]];
-        const [c7, c8, c9] = [arr[2][0], arr[2][1], arr[2][2]];
+        const a = varModule.gameboardArr;
 
         return (
-            _equal(c1, c2, c3) ? ['0-0', '0-1', '0-2']
-            : _equal(c4, c5, c6) ? ['1-0', '1-1', '1-2']
-            : _equal(c7, c8, c9) ? ['2-0', '2-1', '2-2']
-            : _equal(c1, c4, c7) ? ['0-0', '1-0', '2-0']
-            : _equal(c2, c5, c8) ? ['0-1', '1-1', '2-1']
-            : _equal(c3, c6, c9) ? ['0-2', '1-2', '2-2']
-            : _equal(c1, c5, c9) ? ['0-0', '1-1', '2-2']
-            : _equal(c3, c5, c7) ? ['0-2', '1-1', '2-0']
-            : false
+                    _equal(a[0], a[1], a[2]) ? [0, 1, 2].map(String)
+                :   _equal(a[3], a[4], a[5]) ? [3, 4, 5].map(String)
+                :   _equal(a[6], a[7], a[8]) ? [6, 7, 8].map(String)
+                :   _equal(a[0], a[3], a[6]) ? [0, 3, 6].map(String)
+                :   _equal(a[1], a[4], a[7]) ? [1, 4, 7].map(String)
+                :   _equal(a[2], a[5], a[8]) ? [2, 5, 8].map(String)
+                :   _equal(a[0], a[4], a[8]) ? [0, 4, 8].map(String)
+                :   _equal(a[2], a[4], a[6]) ? [2, 4, 6].map(String)
+                :   false
         );
-                
     }
     
     function _equal(a, b, c) {
-        return (a == 'x' && b == 'x' && c == 'x') || (a == 'o' && b == 'o' && c == 'o');
+        return (a == 'x' && b == 'x' && c == 'x') || (a == 'o' && b == 'o' && c == 'o') ? [a,b,c].map(String) : false;
     }
 
     function _winGame(datacells = _threeInARow()) {
         if (!datacells) return;
 
         // Style the winning row
-        const cells = [...elemModule.gameCells].filter(gamecell => datacells.includes(gamecell.dataset.cell));
+        const cells = [...elemModule.gameCells].filter(gamecell => datacells.includes(gamecell.dataset.cell));     
         cells.forEach(cell => {
-            _changeClass(cell, 'add', 'win');
+            _changeClass(cell, 'add', `win-${elemModule.p1Name.className.includes('active') ? 'o' : 'x'}`);
         })
 
         // Display Winner 
@@ -102,6 +101,7 @@ const eventsModule = (function() {
 
 
     // Public Methods
+
     function startGame() {
         // Add click event handler to game cells
         elemModule.gameCells.forEach(gameCell => {
@@ -109,8 +109,17 @@ const eventsModule = (function() {
         })
 
         // Set player names on gameboard
-        const player1 = elemModule.p1.value || 'Uzoma';
-        const player2 = elemModule.p2.className == 'no-display' ? 'Robot' : elemModule.p2.value || 'Mary';   
+        let player1, player2;
+
+        player1 = elemModule.p1.value || 'Uzoma';
+        player2 = elemModule.p2.className == 'no-display' ? 'Robot' : elemModule.p2.value || 'Mary';  
+
+        // If in AI Mode and AI starts
+        if (elemModule.p2.className == 'no-display' && varModule.robotStarts) {
+            player2 = player1;
+            player1 = 'Robot';
+        }
+        
         elemModule.p1Name.textContent = player1;
         elemModule.p2Name.textContent = player2;
 
@@ -124,20 +133,29 @@ const eventsModule = (function() {
     }
 
     function changeToAIMode(e) {
-        // Hide Player 2 input field
+        // Toggle Player 2 input field and starter span
         _changeClass(elemModule.p2, 'toggle', 'no-display');
+        _changeClass(elemModule.starter, 'toggle', 'no-display');
 
         // Toggle text content of Players' labels and Game Mode
         if (elemModule.p2Label.textContent) {
             elemModule.p2Label.textContent = '';
             elemModule.p1Label.textContent = 'Player';
-            e.target.textContent = 'Play with Human';
+            e.target.textContent = varModule.PLAY_HUMAN;
         }
         else {
             elemModule.p2Label.textContent = 'Player 2';
             elemModule.p1Label.textContent = 'Player 1';
-            e.target.textContent = 'Play with AI';
+            e.target.textContent = varModule.PLAY_AI;
         }
+    }
+
+    function startFirstOrSecond(e) {
+        // Toggle text content of starter span
+        e.target.textContent = e.target.textContent == varModule.START_AI ? varModule.START_HUMAN : varModule.START_AI;
+
+        // Set robotStarts to true if robot starts
+        varModule.robotStarts = e.target.textContent == varModule.START_AI;
     }
 
     function displayXAndO(e) {   
@@ -151,10 +169,10 @@ const eventsModule = (function() {
         const i = e.target.dataset.cell;
         
         e.target.textContent = varModule.counter % 2 ? 'o' : 'x';
-        varModule.gameboardArr[i[0]][i.slice(-1)] = e.target.textContent;
+        varModule.gameboardArr[i] = e.target.textContent;
 
         // Check for win
-        if (_threeInARow()) _winGame();
+        if (_threeInARow()) return _winGame();
 
         // Check for tie
         if ([...elemModule.gameCells].every(gamecell => gamecell.textContent != '')) _drawGame();
@@ -175,11 +193,12 @@ const eventsModule = (function() {
         // Clear Gamebaord in DOM...
         elemModule.gameCells.forEach(gameCell => {
             gameCell.textContent = '';
-            _changeClass(gameCell, 'remove', 'win');
+            _changeClass(gameCell, 'remove', 'win-x');
+            _changeClass(gameCell, 'remove', 'win-o');
         })
 
         // ...and in Array
-        varModule.gameboardArr = varModule.gameboardArr.map(x => ['', '', '']);
+        varModule.gameboardArr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
         // Make Player 1 the active player
         _changeClass(elemModule.p2Name, 'remove', 'active');
@@ -197,6 +216,7 @@ const eventsModule = (function() {
     return {
         startGame,
         changeToAIMode,
+        startFirstOrSecond,
         displayXAndO,
         newGame,
         closeWinnerDisplay,
@@ -207,6 +227,7 @@ const eventsModule = (function() {
 const DOMModule = (function() {
     elemModule.startBtn.addEventListener('click', eventsModule.startGame);
     elemModule.gameMode.addEventListener('click', eventsModule.changeToAIMode);
+    elemModule.starter.addEventListener('click', eventsModule.startFirstOrSecond);
     elemModule.newGameBtns.forEach(newGameBtn => newGameBtn.addEventListener('click', eventsModule.newGame));
     elemModule.okBtn.addEventListener('click', eventsModule.closeWinnerDisplay);
 })();
